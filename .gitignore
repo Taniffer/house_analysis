@@ -1,6 +1,5 @@
 
 # general
-node_modules/*
 *.log
 
 
@@ -10,6 +9,8 @@ node_modules/*
 
 .DS_Store
 dist/*.map
+house_web/node_modules
 
 
 #back_end
+house/node_modules
