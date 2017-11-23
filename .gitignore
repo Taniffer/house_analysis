@@ -1,0 +1,15 @@
+
+# general
+node_modules/*
+*.log
+
+
+
+
+# front_end
+
+.DS_Store
+dist/*.map
+
+
+#back_end
