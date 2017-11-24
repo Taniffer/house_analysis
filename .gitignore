@@ -1,7 +1,7 @@
 
 # general
 *.log
-
+/.idea
 
 
 
@@ -10,7 +10,9 @@
 .DS_Store
 dist/*.map
 /house_web/node_modules
+/house_web/.idea
 
 
 #back_end
 /house/node_modules
+/house/.idea
