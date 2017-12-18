@@ -1,9 +1,3 @@
-const server=require('./server');
 
-
-
-
-
-
-// server.init(120);
-server.start();
+require('babel-core/register');
+require('./app.js');

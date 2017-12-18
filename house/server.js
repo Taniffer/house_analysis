@@ -6,13 +6,21 @@ var http = require("http"),
     express = require('express'),
     eventproxy = require('eventproxy'),
     request = require('request'),
+    mysql = require('promise-mysql'),
     download = require('download');
 
 
-var app = express(),
+let app = express(),
     items = [],
     ep = new eventproxy(),
-    mongodb = require('./modal/connect');
+    pool = mysql.createPool({
+        host: 'localhost',
+        user: 'sauron',
+        password: 'theonetruering',
+        database: 'mordor',
+        connectionLimit: 10
+    }),
+    mongodb = require('./mongo/connect');
 
 
 mongodb.init('mongodb://localhost:27017/houseAnalysis');
@@ -302,8 +310,8 @@ const start = () => {
     });
 
 
-    app.listen(8000, function () {
-        console.log('app is listening at port 8000');
+    app.listen(8008, function () {
+        console.log('app is listening at port 8008');
     });
 };
 
