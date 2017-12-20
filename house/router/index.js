@@ -1,8 +1,10 @@
 const router = require('koa-router')()
 
 
-const consoleTest = require('./console')
+import Addr from './addr'
+import House from './house'
 
-router.use('/',consoleTest.routes(),consoleTest.allowedMethods())
+router.use('/api/house',House.routes(),House.allowedMethods())
+router.use('/api/addr',Addr.routes(),Addr.allowedMethods())
 
 module.exports = router

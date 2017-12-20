@@ -1,4 +1,8 @@
+import Address from "../modal/addr/addr"
+
 let mongoose = require('mongoose');
+
+
 
 mongoose.connect('mongodb://localhost/houseAnalysis', { useMongoClient: true });
 mongoose.Promise = global.Promise;
@@ -40,26 +44,29 @@ var house = mongoose.model('house', houseSchema);
 let data = {
         title:'是打发',
         href:'sdfaf',
-        addr:'华贸城'
+        addr:'华贸'
     },
     data1=[{
-        name:'华贸城',
+        name:'华贸',
         loc:'115.1116'
     }]
 
 let xiaoqu=new adr({
     name:data.addr,
+    loc:'xx',
     count:0,
 });
 
+console.log(xiaoqu._id)
 
-
-adr.find({'name':xiaoqu.name})
+adr.findOne({'name':xiaoqu.name})
     .then((res)=>{
 
         // console.log(err)
         // console.log('发生错误')
-        if(res.length===0) {
+        console.log(res)
+        if(!res) {
+
             console.log('储存')
             xiaoqu.save()
                 .then(res => {
@@ -80,9 +87,15 @@ adr.find({'name':xiaoqu.name})
                 })
         }else {
 
-            res[0].count++;
-            res[0].save(res=>{})
+            res.count++;
+            res.save(res=>{})
             console.log('ssu')
             console.log(res)
         }
     })
+
+
+// let xx = adr.find({'loc':{$exists:true}});
+// console.log(xx)
+
+

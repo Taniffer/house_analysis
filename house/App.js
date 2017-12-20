@@ -5,7 +5,10 @@ const db = require('./mongo/db')
 
 
 const routers = require('./router/index')
-
+// import house from './modal/house/houseInf'
+//
+// let  xx= new house()
+// xx.save()
 const app = new Koa
 
 app.use(loggers())

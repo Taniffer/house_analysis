@@ -20,7 +20,7 @@ let app = express(),
         database: 'mordor',
         connectionLimit: 10
     }),
-    mongodb = require('./mongo/connect');
+    mongodb = require('../mongo/connect');
 
 
 mongodb.init('mongodb://localhost:27017/houseAnalysis');
