@@ -192,7 +192,7 @@ export default class Spider extends BaseCop{
                             let houseAddrName =  await Address.findOne({name:newHouse.addr})
 
                             // console.log(houseAddrName)
-
+                            //没有这个地址，新建地址
                             if (!houseAddrName){
                                 let newAddr = new Address({
                                     name:newHouse.addr,
@@ -200,12 +200,15 @@ export default class Spider extends BaseCop{
                                 })
                                 newAddr.housesId.push(newHouse._id)
                                 newHouse.addrId = newAddr._id
+                                newAddr.price = newHouse.price
 
                                 await newHouse.save()
                                 await newAddr.save()
                             }else {
+                                //有这个地址，在原油地址上改动
                                 houseAddrName.count++
                                 houseAddrName.housesId.push(newHouse._id)
+                                houseAddrName.price += newHouse.price
                                 newHouse.addrId = houseAddrName._id
 
                                 await newHouse.save()

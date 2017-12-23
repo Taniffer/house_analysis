@@ -80,7 +80,7 @@ module.exports = function(proxy, allowedHost) {
     proxy:{
         '/api': {
             // target: 'http://localhost:8080/weixin',//本地调试
-            target: 'http://localhost:8000/house',
+            target: 'http://localhost:8008/api',
             secure: false,
             changeOrigin: true,
             pathRewrite: { "^/api": "" },

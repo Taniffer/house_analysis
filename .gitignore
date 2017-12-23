@@ -1,6 +1,7 @@
 
 # general
 *.log
+*.map
 /.idea
 
 

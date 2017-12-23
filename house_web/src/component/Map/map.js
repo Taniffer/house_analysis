@@ -91,15 +91,23 @@ export default class MapCop extends Component{
             currentLocation: '点击地图',
             mapInstance:false,
             houseData:[],
+            houseDataPrice:[],
         }
 
 
     }
     componentWillMount() {
-        axios.get('/api').then(res => {
+        axios.get('/api/addr/getCode').then(res => {
             console.log(res.data)
+            let renderData = [],
+                renderDataPrice= []
+            res.data.forEach((ele) => {
+               renderData.push({lng:ele.code.split(',')[0],lat:ele.code.split(',')[1],count:ele.count})
+                renderDataPrice.push({lng:ele.code.split(',')[0],lat:ele.code.split(',')[1],count:(ele.price/ele.count).toFixed(0)})
+            })
                 this.setState({
-                    houseData:res.data,
+                    houseData:renderData,
+                    houseDataPrice:renderDataPrice,
                 })
         })
     }
@@ -125,7 +133,7 @@ export default class MapCop extends Component{
         const zooms = [3, 18];
         const dataSet = {
             data: this.state.houseData,
-            max: 12
+            max: 11
         }
 
         const pluginProps = {

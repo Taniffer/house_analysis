@@ -5,6 +5,7 @@ const Schema = mongoose.Schema
 const addrSchema = new Schema({
     name:{type:String,unique:true},
     code:String,
+    price:Number,
     count:Number,
     housesId:[{type:Schema.Types.ObjectId,ref:'houseInfo'}]
 

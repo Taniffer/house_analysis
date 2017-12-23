@@ -8,7 +8,7 @@ class AddrControl extends Spider {
     }
 
     async getAddrAndCode (ctx,next) {
-        let allAddr = await Address.find({},{name:true,code:true,count:true})
+        let allAddr = await Address.find({},{code:true,count:true,price:true})
         ctx.body=allAddr
     }
 
