@@ -1,6 +1,6 @@
 const config = {
     port: 8008,
-    url: 'mongodb://localhost:27017/house',
+    url: 'mongodb://120.79.69.149:27017/house',
     // session: {
     //     name: 'SID',
     //     secret: 'SID',

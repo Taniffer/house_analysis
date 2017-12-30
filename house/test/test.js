@@ -1,198 +1,84 @@
-var assert = require('assert')
+const  jwtTest =()=>{
+
+const Koa = require('koa')
+const Router = require('koa-router')
+const bodyParser = require('koa-body')
+const jwt = require('jsonwebtoken')
+const jwtKoa = require('koa-jwt')
+const util = require('util')
+const verify = util.promisify(jwt.verify) // 解密
+const secret = 'jwt demo'
+const app = new Koa()
+const router = new Router()
+app.use(bodyParser({mutipart:true}))
+app
+    .use(jwtKoa({secret}).unless({
+        path: [/^\/api\/login/] //数组中的路径不需要通过jwt验证
+    }))
+router.post('/api/login', async (ctx, next) => {
+        const user = ctx.request.body
+        console.log(user)
+        if(user && user.name) {
+            let userToken = {
+                name: user.name
+            }
+            const token = jwt.sign(userToken, secret, {expiresIn: '1h'})  //token签名 有效期为1小时
+            ctx.body = {
+                message: '获取token成功',
+                code: 1,
+                token
+            }
+        } else {
+            ctx.body = {
+                message: '参数错误',
+                code: -1
+            }
+        }
+    })
+    .get('/api/userInfo', async (ctx) => {
+        const token = ctx.header.authorization  // 获取jwt
+        let payload
+        if (token) {
+            payload = await verify(token.split(' ')[1], secret)  // // 解密，获取payload
+            ctx.body = {
+                payload
+            }
+        } else {
+            ctx.body = {
+                message: 'token 错误',
+                code: -1
+            }
+        }
+    })
+app
+    .use(router.routes())
+    .use(router.allowedMethods())
+app.listen(3001, () => {
+    console.log('app listening 3001...')
+})
 
 
-
-// var Schema = mongoose.Schema;
-//
-// var personSchema = Schema({
-//     _id: Schema.Types.ObjectId,
-//     name: String,
-//     age: Number,
-//     stories: [{ type: Schema.Types.ObjectId, ref: 'Story' }]
-// });
-//
-// var storySchema = Schema({
-//     author: { type: Schema.Types.ObjectId, ref: 'Person' },
-//     title: String,
-//     fans: [{ type: Schema.Types.ObjectId, ref: 'Person' }]
-// });
-//
-// var Story = mongoose.model('Story', storySchema);
-// var Person = mongoose.model('Person', personSchema);
-//
-// var author = new Person({
-//     _id: new mongoose.Types.ObjectId(),
-//     name: 'Ian Fleming',
-//     age: 50
-// });
-//
-// author.age=49
-//
-// author.save(function (err) {
-//     if (err) return handleError(err);
-//
-//     var story1 = new Story({
-//         title: 'Casino Royale',
-//         author: author._id    // assign the _id from the person
-//     });
-//
-//
-//     story1.save(function (err) {
-//         if (err) return handleError(err);
-//         // thats it!
-//         author.stories.push(story1._id);
-//         author.save();
-//         console.log(story1._id,author._id)
-//         console.log('xxx')
-//     });
-// });
-//
-// var kittySchema = mongoose.Schema({
-//     name: String
-// });
+}
 
 
-// kittySchema.methods.speak = function () {
-//     var greeting = this.name
-//         ? "Meow name is " + this.name
-//         : "I don't have a name";
-//     console.log(greeting);
-// }
-//
-// var Kitten = mongoose.model('Kitten', kittySchema);
-//
-// var fluffy = new Kitten({ name: 'fluffy' });
-// fluffy.speak(); // "Meow name is fluffy"
-//
-//
-// fluffy.save(function (err, fluffy) {
-//     if (err) return console.error(err);
-//     fluffy.speak();
-// });
-// Kitten.find(function (err, kittens) {
-//     if (err) return console.error(err);
-//     console.log(kittens);
-// })
+const bodyTest =()=>{
 
 
-var mongoose = require('mongoose');
+    const Koa = require('koa');
+    const koaBody = require('koa-body');
 
-mongoose.connect('mongodb://localhost/houseAnalysis', { useMongoClient: true });
-mongoose.Promise = global.Promise;
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-    // we're connected!
-    console.log('sucess')
-});
+    const app = new Koa();
 
-
- var Schema = mongoose.Schema;
-//
-// let adrSchema = Schema({
-//     name:String,
-//     loc:String,
-//     count:Number,
-//     houses:[{type:Schema.Types.ObjectId,ref:'adr'}],
-// });
-//
-//
-//
-// let houseSchema = Schema({
-//
-//     title: String,
-//     href:String,
-//     addr:{type:Schema.Types.ObjectId,ref:'house'}
-// });
-//
-//
-//
-// var adr = mongoose.model('adr', adrSchema);
-// var house = mongoose.model('house', houseSchema);
-//
-//
-//
-// // let hou = new house;
-//
-// let data = {
-//     title:'是打发',
-//     href:'sdfaf',
-//     addr:'华贸城'
-// },
-//     data1=[{
-//         name:'华贸城',
-//         loc:'115.1116'
-//     }]
-//
-// let xiaoqu=new adr({
-//     name:data.addr,
-//     count:0,
-// });
-//
-//
-//
-// adr.find({'name':xiaoqu.name})
-//     .then((res)=>{
-//
-//              // console.log(err)
-//              // console.log('发生错误')
-//         if(res.length===0) {
-//             console.log('储存')
-//             xiaoqu.save()
-//                 .then(res => {
-//                     let hou = new house({
-//                         title: data.title,
-//                         href: data.href,
-//                         addr: xiaoqu._id,
-//                     });
-//
-//                     hou.save( res => {
-//
-//                         xiaoqu.houses.push(hou._id)
-//                         xiaoqu.save(res => {
-//                         });
-//                     })
-//
-//
-//                 })
-//         }else {
-//
-//             res[0].count++;
-//             res[0].save(res=>{})
-//             console.log('ssu')
-//             console.log(res)
-//         }
-//     })
-
-// xiaoqu.save(function (err,res) {
-//     console.log(2)
-// })
-
-                // let hou = new house({
-                //     title:data.title,
-                //     href:data.href,
-                //
-                // });
-                //
-                // hou.save(function (err,res) {
-                //
-                // })
-
-var uniqueUsernameSchema = new Schema({
-    username: {
-        type: String,
-        unique: true
-    }
-});
-var U1 = db.model('U1', uniqueUsernameSchema);
-var U2 = db.model('U2', uniqueUsernameSchema);
-
-var dup = [{ username: 'Val' }, { username: 'Val' }, { username: 'Val' }];
-
-
-
-
-    U1.create(dup, function(error) {
-        // Will save successfully!
+    app.use(koaBody({multipart:true}));
+    app.use(ctx => {
+        // ctx.body = `Request Body: ${JSON.stringify(ctx.request.body)}`;
+        ctx.body = ctx.request.body;
+        console.log(ctx.request.body.name)
     });
 
+    app.listen(3001);
+
+
+}
+
+bodyTest()
