@@ -6,9 +6,8 @@ import Heatmap from 'react-amap-plugin-heatmap';
 
 
 import { Map,Marker,Markers } from 'react-amap';
+import myFetchConf from '../../common/myFetch'
 import './map.css';
-
-
 
 // const MyMapComponent = (props) => {
 //     // props.__ele__;
@@ -98,10 +97,10 @@ export default class MapCop extends Component{
     }
     componentWillMount() {
         axios.get('/api/addr/getCode').then(res => {
-            console.log(res.data)
+            console.log(res.data.data)
             let renderData = [],
                 renderDataPrice= []
-            res.data.forEach((ele) => {
+            res.data.data.forEach((ele) => {
                renderData.push({lng:ele.code.split(',')[0],lat:ele.code.split(',')[1],count:ele.count})
                 renderDataPrice.push({lng:ele.code.split(',')[0],lat:ele.code.split(',')[1],count:(ele.price/ele.count).toFixed(0)})
             })
@@ -109,6 +108,8 @@ export default class MapCop extends Component{
                     houseData:renderData,
                     houseDataPrice:renderDataPrice,
                 })
+        }).catch(e=>{
+            myFetchConf.errHandle(e)
         })
     }
 

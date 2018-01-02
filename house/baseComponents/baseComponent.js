@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default class BaseCom{
     promisify  (fn, receiver)  {
         return (...args) => {
@@ -7,6 +9,8 @@ export default class BaseCom{
                 }]);
             });
         };
-    };
+    }
+
+
 
 }

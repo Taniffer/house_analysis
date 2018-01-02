@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router ,Link,Route} from 'react-router-dom'
+import {HashRouter as Router ,Link,Route} from 'react-router-dom'
 import logo from './logo.svg';
 import './App.css';
 
-
+import myFetchConf from './common/myFetch'
 import Map from './component/Map/map';
 import Login from './component/login/login'
+
+
+myFetchConf.init()
+
 
 class App extends Component {
   render() {
@@ -16,8 +20,8 @@ class App extends Component {
           {/*<img src={logo} className="App-logo" alt="logo" />*/}
           {/*<h1 className="App-title">Welcome to React</h1>*/}
         {/*</header>*/}
-          {/*<Route exact path = '/' render={()=>(<div><div> welCome </div> <Link to={`map`}>导向map</Link></div>)} />*/}
-          <Route path = '/' component={Login}/>
+          <Route exact path = '/' render={()=>window.location.hash = '/login'} />
+          <Route  path = '/login' component={Login}/>
           <Route  path = '/map' component={Map} />
 
 

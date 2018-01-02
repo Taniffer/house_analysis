@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import axios from 'axios';
-
+import myFetch from '../../common/myFetch'
 
 import './login.css'
 
@@ -29,6 +29,15 @@ class NormalLoginForm extends React.Component {
                 }
                 axios.post('api/login',values).then((res)=>{
                     console.log(res)
+                    try {
+                     myFetch.setAuthor(res.data.token)
+                    window.location.hash='/map'
+                    }catch (e){
+                        console.log('设置token是出现错误',e)
+                    }
+
+                }).catch(e=>{
+                    myFetch.errHandle(e)
                 })
             });
         }

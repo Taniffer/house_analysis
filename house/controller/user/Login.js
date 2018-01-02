@@ -32,7 +32,6 @@ class Login  {
                 ctx.body = {
                     errorCode:0,
                     message: '获取token成功',
-                    code: 1,
                     token
                 }
             }
@@ -40,14 +39,12 @@ class Login  {
                 ctx.body = {
                     errorCode:10001,
                     message: '用户不存在或者密码错误',
-                    code: -1
                 }
             }
         } else {
             ctx.body = {
                 errorCode:10002,
                 message: '参数错误',
-                code: -1
             }
         }
 

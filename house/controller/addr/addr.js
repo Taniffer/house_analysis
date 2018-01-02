@@ -9,7 +9,13 @@ class AddrControl extends Spider {
 
     async getAddrAndCode (ctx,next) {
         let allAddr = await Address.find({},{code:true,count:true,price:true})
-        ctx.body=allAddr
+        ctx.body = {
+            errorCode:0,
+            message: '获取token成功',
+            code: 1,
+            data:allAddr,
+        }
+
     }
 
 }
