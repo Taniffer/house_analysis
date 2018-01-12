@@ -1,6 +1,6 @@
 const Koa = require('koa')
 const config=require('./config')
-// const loggers = require('koa-logger')
+const loggers = require('koa-logger')
 const db = require('./mongo/db')
 // const bodyParser = require('koa-bodyparser')
 const jwt = require('jsonwebtoken')
@@ -19,7 +19,7 @@ const app = new Koa
 // app.use(bodyParser())
 
 
-// app.use(loggers())
+app.use(loggers())
 
 app.use(jwtKoa({secret}).unless({
         path: [/^\/api\/login/] //数组中的路径不需要通过jwt验证

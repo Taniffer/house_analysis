@@ -20,7 +20,7 @@ class App extends Component {
           {/*<img src={logo} className="App-logo" alt="logo" />*/}
           {/*<h1 className="App-title">Welcome to React</h1>*/}
         {/*</header>*/}
-          <Route exact path = '/' render={()=>window.location.hash = '/login'} />
+          <Route exact path = '/' render={()=>window.location.hash = '/map'} />
           <Route  path = '/login' component={Login}/>
           <Route  path = '/map' component={Map} />
 
