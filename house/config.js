@@ -1,6 +1,10 @@
 const config = {
     port: 8008,
-    url: 'mongodb://120.79.69.149:27017/house',
+    mongoConf:{
+        url: 'mongodb://120.79.69.149:27017/house',
+        user:'admin',
+        password:'admin',
+    },
     // session: {
     //     name: 'SID',
     //     secret: 'SID',
