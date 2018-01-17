@@ -1,3 +1,3 @@
 
 require('babel-core/register');
-require('./test/main');
+require('./test/mongoose');

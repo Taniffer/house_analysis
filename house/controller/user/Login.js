@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken')
 // const jwtKoa = require('koa-jwt')
 const util = require('util')
 const verify = util.promisify(jwt.verify) // 解密
-import User from '../../modal/user/user'
 const secret = 'jwt demo'
+import User from '../../modal/user/user'
 
 
 class Login  {
